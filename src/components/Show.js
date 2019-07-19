@@ -1,78 +1,62 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Appnav from './components/Appnav'
+import React,{Component} from 'react'
+import Appnav from './Appnav'
+import { Link } from 'react-router-dom';
 
-
-export default class App extends Component {
-
-    handleDate = (e) => {
-
-        e.preventDefault();
-
-    };
-
-    handleOnChangeValue = (e) => {
-        this.setState({myDate: e.target.value, showData: true});
-
-        //alert(this.state.myDate)
-
-    };
-
-    constructor(props) {
+export default class Show extends Component{
+    constructor(props){
         super(props)
-        this.state = {
-            myDate: '',
-            showData: false,
+        this.state={
+            day:this.props.match.params.day,
             appoinmentData: [
                 {
                     patientName: 'Albert Agoya',
                     email: 'albert@gmail.com',
                     appointmentDate: '2019-03-29',
-                    day:'Monday'
+                    day: 'Monday'
                 }, {
                     patientName: 'Mary Muigai',
                     email: 'mmgai@gmail.com',
                     appointmentDate: '2019-07-19',
-                    day:'Monday'
+                    day: 'Monday'
                 }, {
                     patientName: 'Tom Moba',
                     email: 'tomMoboya@gmail.com',
                     appointmentDate: '2019-07-19',
-                    day:'Tuesday'
+                    day: 'Tuesday'
                 }, {
                     patientName: 'Peter Mtembei',
                     email: 'peterM@gmail.com',
                     appointmentDate: '2019-07-19',
-                    day:'Tuesday'
+                    day: 'Tuesday'
                 }, {
                     patientName: 'Raph Pundo',
                     email: 'rpundo@gmail.com',
                     appointmentDate: '2019-07-19',
-                    day:'Wednesday'
+                    day: 'Wednesday'
                 }, {
                     patientName: 'Dennis Obuya',
                     email: 'dennis@gmail.com',
                     appointmentDate: '2019-07-19',
-                    day:'Wednesday'
+                    day: 'Wednesday'
                 }, {
                     patientName: 'Caro Mwende',
                     email: 'caro@gmail.com',
                     appointmentDate: '2019-02-02',
-                    day:'Thursday'
+                    day: 'Thursday'
                 }
             ]
         }
     }
+    render(){
 
-    render() {
         const appointmentdata = this.state.appoinmentData;
         const appointmentList = appointmentdata.map(app => {
-            if (app.appointmentDate === this.state.myDate) {
+            if (app.day === this.state.day) {
                 return (
                     <tr>
                         <td>{app.patientName}</td>
                         <td>{app.appointmentDate}</td>
+                        <td>{app.day}</td>
                         <td>{app.email}</td>
 
                     </tr>
@@ -80,37 +64,23 @@ export default class App extends Component {
             }
 
         })
-        return (
-            <div className="container-fluid">
+        return(
+
+                <div className="container-fluid">
                 <Appnav></Appnav>
-                
+
                 <div className="container">
-                    <br/>
-                    <h5>Appointments</h5>
-
-                    {
-                      this.state.appoinmentData.map((data)=>{
-                        return(
-                          <button  className="btn">
-                            {data.appointmentDate}
-                          </button>
-                        )
-                      })
-                    }
-                    <h6>Choose on a date to filter.hint choose on '2019-07-19'</h6>
-                    <form>
-                        <input onChange={this.handleOnChangeValue} type="date"/>
-                    </form>
-
-                    {/* <button className="btn">View Patients</button> */}
-
+                    <div>
+                    <h5>Showing Appointments for '{this.state.day}'</h5>
+                    <hr/>
                     <table class="table">
                         <thead>
                             <tr>
 
                                 <th scope="col">Patient Name</th>
                                 <th scope="col">Visit Date</th>
-                                <th scope="col">Email</th>
+                                <th>Visit Day</th>
+                                <th scope="col">Patient Email</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,10 +89,12 @@ export default class App extends Component {
 
                         </tbody>
                     </table>
-                    {/* <p>Return all patients with appointment {this.state.myDate}</p> */}
+                        </div>
+                        </div>
+                    </div>
+            
 
-                </div>
-            </div>
-        );
+        
+        )
     }
 }
